@@ -8,7 +8,9 @@
       the lastest games. The first table shows recommended 
       specs for a new PC, and below that
       is a table showing the minimum specs if you need to 
-      stay cheap.
+      stay cheap. These tables are updated by users. Vote
+      <a href="http://pcspecs.freedommuskrats.com/#/vote">here</a> 
+      to help keep them up to date. 
     </p>
     <SpecsTable/>
   </div>
