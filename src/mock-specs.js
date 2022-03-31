@@ -4,19 +4,23 @@ let recommended = [
     recommendations: [
       {
         name: "Nvidia GeForce RTX 3080",
-        count: 100
-      },
-      {
-        name: "AMD Radeon RX 6800 XT",
-        count: 200
+        count: 15
       },
       {
         name: "Nvidia GeForce RTX 3060 Ti",
-        count: 70
+        count: 7
       },
       {
         name: "AMD Radeon RX 6900 XT",
-        count: 50
+        count: 5
+      },
+      {
+        name: "Nvidia GeForce GTX 1050",
+        count: 2
+      },
+      {
+        name: "AMD Radeon RX 6800 XT",
+        count: 10
       }
     ]
   },

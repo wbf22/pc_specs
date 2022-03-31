@@ -9,7 +9,7 @@
       specs for a new PC, and below that
       is a table showing the minimum specs if you need to 
       stay cheap. These tables are updated by users. Vote
-      <a href="http://pcspecs.freedommuskrats.com/#/vote">here</a> 
+      <router-link to="/vote">here<span class="sr-only">(current)</span></router-link> 
       to help keep them up to date. 
     </p>
     <SpecsTable/>
@@ -43,6 +43,7 @@ export default {
 p {
   text-align: left;
   margin-top: 5%;
+  width: 80%;
 }
 
 </style>

@@ -91,7 +91,7 @@ export default ({
 
 <style scoped>
 .table_section {
-    width: 100%;
+    width: 80%;
     margin-top: 5%;
 }
 

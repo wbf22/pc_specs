@@ -9,18 +9,18 @@
         <p>
             Building your own PC requires a lot of time
             and research, and many novices may find it 
-            too difficult. There is also some risk as 
+            too difficult. There is also some risk, as 
             integrating different parts can lead to 
             compatibility issues. Sometimes this can cause
             crashes or other problems. However, building 
             a PC allows you to have whatever specs you 
-            want as well as giving you more options for
+            want, as well as giving you more options for
             asthetic. It is also generally cheaper to build
             your own PC than to buy one.  
         </p>
         <p>
             So if you have time and confidence, build a PC. If 
-            not buying is probably your best option.
+            not, buying is probably your best option.
         </p>
     </div>
   </div>
