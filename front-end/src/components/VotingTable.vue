@@ -4,37 +4,36 @@
 
         <div class="table">
             <div class="row title">
-                <h3 class="titleText">{{data[0].type}}</h3>
+                <h3 class="titleText">{{title}}</h3>
             </div>
 
-            <div class="row" v-for="reccomendation in data">
+            <div class="row" v-for="reccomendation in recommendations" :key="reccomendation.id">
                 <div class="arrows">
-                    <span @click="vote(1, reccomendation)">
+                    <button @click="vote(1, reccomendation)">
                         <svg width="18" height="18">
                             <path d="M1 12.5h16L9 4.5 1 12.5z" fill="currentColor"></path>
                         </svg>
-                    </span>
+                    </button>
                     <br>
                     <a>{{reccomendation.votes}}</a>
                     <br>
-                    <span  @click="vote(-1, reccomendation)">
+                    <button  @click="vote(-1, reccomendation)">
                         <svg width="18" height="18">
                             <path d="M1 5.5h16L9 13.5 1 5.5z" fill="currentColor"></path>
                         </svg>
-                    </span>
+                    </button>
                 </div>
                 <div class="recommendationBox">
                     <a>{{reccomendation.name}}</a>
-                    <a @click="deleteRec(reccomendation)">x</a>
+                    <button @click="deleteRec(reccomendation)">x</button>
                 </div>
             </div>
 
 
             <div class="row">
-                <div class="recommendationBox">
-                    <svg width="18" height="18" @click="addRecommendation(newRecName)">
-                        <path: 'M0,-1 V1 M-1,0 H1' fill="currentColor"></path>
-                    </svg>
+                <div class="bottomAddBox">
+                   
+                    <button @click="addRecommendation">add</button>
                     <input v-model="newRecName" type="text" placeholder="Enter Your Recomendation">
                 </div>
             </div>
@@ -54,30 +53,32 @@
 
     export default ({
         name: "VotingTable",
-        props: ["data"],
-        data {
+        props: ['recs'],
+        data () {
             return {
                 newRecName: "",
             }
         },
         computed: {
             title() {
-                return this.data[0].type;
+                return this.recs[0].type;
             },
             recommendations() {
-                return data;
+                return this.recs;
             },
         },
         methods: {
             vote(int, reccomendation) {
+                console.log("voteArrow");
                 reccomendation.votes += int;
                 this.$emit("vote", reccomendation);
             },
-            addRecommendation(name) {
-                if (newRecName != ""){
+            addRecommendation() {
+                console.log("add");
+                if (this.newRecName != ""){
                     let rec = {
                         type: this.title,
-                        name: name,
+                        name: this.newRecName,
                         dateCreated: Date.now(),
                         votes: 0,
                     }
@@ -85,7 +86,8 @@
                 }
             },
             deleteRec(rec) {
-                this.$emit("deleteRec", rec._id);
+                console.log("del");
+                this.$emit("deleteRec", rec);
             },
 
         }
@@ -149,5 +151,14 @@
     border-bottom: 1px solid #e9e9e9;
 }
 
+.bottomAddBox {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    border: none;
+}
 
 </style>

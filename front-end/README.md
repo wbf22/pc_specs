@@ -1,4 +1,4 @@
-# pc_specs
+# front-end
 
 ## Project setup
 ```

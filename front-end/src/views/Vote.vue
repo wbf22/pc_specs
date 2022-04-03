@@ -8,10 +8,10 @@
       you would reccomend. 
     </p>
 
-    <VotingTable :data="graphicsCards" @vote="voteOnRec" @newRec="postRecomendation"></VotingTable>
-    <VotingTable :data="cpus" @vote="voteOnRec" @newRec="postRecomendation"></VotingTable>
-    <VotingTable :data="rams" @vote="voteOnRec" @newRec="postRecomendation"></VotingTable>
-    <VotingTable :data="storages" @vote="voteOnRec" @newRec="postRecomendation"></VotingTable>
+    <VotingTable :recs="graphicsCards" @vote="voteOnRec" @newRec="postRecomendation" @deleteRec="deleteItem"></VotingTable>
+    <VotingTable :recs="cpus" @vote="voteOnRec" @newRec="postRecomendation" @deleteRec="deleteItem"></VotingTable>
+    <VotingTable :recs="rams" @vote="voteOnRec" @newRec="postRecomendation" @deleteRec="deleteItem"></VotingTable>
+    <VotingTable :recs="storages" @vote="voteOnRec" @newRec="postRecomendation" @deleteRec="deleteItem"></VotingTable>
 
 
   </div>
@@ -19,6 +19,7 @@
 
 <script>
 // @ is an alias to /src
+import axios from 'axios';
 import VotingTable from '@/components/VotingTable.vue'
 
 export default {
@@ -31,29 +32,32 @@ export default {
       recomendations: [],
     }
   },
-  created: {
+  created() {
     this.getRecomendations();
   },
   computed: {
     graphicsCards() {
-      let gcs = this.recomendations.filter(recomendation => recomendation.type.toLowerCase() == "Graphics Card"));
+      let gcs = this.recomendations.filter(recomendation => recomendation.type.toLowerCase() == "Graphics Card");
       return gcs.sort((a, b) => a.votes > b.votes);
+      
+      // return this.$root.$data.recommendedSpecs[0].recommendations;
     },
     cpus() {
-      let cs = this.recomendations.filter(recomendation => recomendation.type.toLowerCase() == "CPU"));
+      let cs = this.recomendations.filter(recomendation => recomendation.type.toLowerCase() == "CPU");
       return cs.sort((a, b) => a.votes > b.votes);
     },
     rams() {
-      let rs = this.recomendations.filter(recomendation => recomendation.type.toLowerCase() == ("RAM"));
+      let rs = this.recomendations.filter(recomendation => recomendation.type.toLowerCase() == "RAM");
       return rs.sort((a, b) => a.votes > b.votes);
     },
     storages() {
-      let ss = this.recomendations.filter(recomendation => recomendation.type.toLowerCase() == ("Storage"));
+      let ss = this.recomendations.filter(recomendation => recomendation.type.toLowerCase() == "Storage");
       return ss.sort((a, b) => a.votes > b.votes);
     },
   },
   methods: {
     async getRecomendations() {
+      console.log("getRecomendations");
       try {
         let response = await axios.get("/api/recommendations");
         this.recomendations = response.data;
@@ -63,8 +67,10 @@ export default {
       }
     },
     async postRecomendation(rec) {
+      console.log("postRecomendation");
+      console.log(rec);
       try {
-        let r2 = await axios.post('/api/recommendations', {
+        await axios.post('/api/recommendations', {
           type: rec.type,
           name: rec.name,
           dateCreated: rec.dateCreated,
@@ -74,9 +80,11 @@ export default {
         console.log(error);
       }
     },
-    async deleteItem(item) {
+    async deleteItem(recomendation) {
+      console.log("deleteItem");
+      console.log(recomendation);
       try {
-        await axios.delete("/api/recommendations/" + item._id);
+        await axios.delete("/api/recommendations/" + recomendation._id);
         this.getRecomendations();
         return true;
       } catch (error) {
@@ -84,8 +92,10 @@ export default {
       }
     },
     async voteOnRec(recomendation) {
+      console.log("voteOnRec");
+      console.log(recomendation);
       try {
-        await axios.put("/api/recommendations/" + item._id, {
+        await axios.put("/api/recommendations/" + recomendation._id, {
           votes:recomendation.votes
         });
         this.getRecomendations();
