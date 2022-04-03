@@ -4,7 +4,7 @@
 
         <div class="table">
             <div class="row title">
-                <h3 class="titleText">{{title}}</h3>
+                <h3 class="titleText">{{getTitle}}</h3>
             </div>
 
             <div class="row" v-for="reccomendation in recommendations" :key="reccomendation.id">
@@ -53,17 +53,18 @@
 
     export default ({
         name: "VotingTable",
-        props: ['recs'],
+        props: ['recs', 'title'],
         data () {
             return {
                 newRecName: "",
             }
         },
         computed: {
-            title() {
-                return this.recs[0].type;
+            getTitle() {
+                return this.title;
             },
             recommendations() {
+                console.log(this.recs)
                 return this.recs;
             },
         },
@@ -83,6 +84,7 @@
                         votes: 0,
                     }
                     this.$emit("newRec", rec);
+                    this.newRecName = "";
                 }
             },
             deleteRec(rec) {

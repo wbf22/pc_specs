@@ -8,10 +8,10 @@
       you would reccomend. 
     </p>
 
-    <VotingTable :recs="graphicsCards" @vote="voteOnRec" @newRec="postRecomendation" @deleteRec="deleteItem"></VotingTable>
-    <VotingTable :recs="cpus" @vote="voteOnRec" @newRec="postRecomendation" @deleteRec="deleteItem"></VotingTable>
-    <VotingTable :recs="rams" @vote="voteOnRec" @newRec="postRecomendation" @deleteRec="deleteItem"></VotingTable>
-    <VotingTable :recs="storages" @vote="voteOnRec" @newRec="postRecomendation" @deleteRec="deleteItem"></VotingTable>
+    <VotingTable :recs="graphicsCards" :title="GRAPHICS_CARD" @vote="voteOnRec" @newRec="postRecomendation" @deleteRec="deleteItem"></VotingTable>
+    <VotingTable :recs="cpus" :title="CPU" @vote="voteOnRec" @newRec="postRecomendation" @deleteRec="deleteItem"></VotingTable>
+    <VotingTable :recs="rams" :title="RAM" @vote="voteOnRec" @newRec="postRecomendation" @deleteRec="deleteItem"></VotingTable>
+    <VotingTable :recs="storages" :title="STORAGE" @vote="voteOnRec" @newRec="postRecomendation" @deleteRec="deleteItem"></VotingTable>
 
 
   </div>
@@ -30,6 +30,10 @@ export default {
   data() {
     return {
       recomendations: [],
+      GRAPHICS_CARD: "Graphics Card",
+      CPU: "CPU",
+      RAM: "RAM",
+      STORAGE: "Storage",
     }
   },
   created() {
@@ -37,22 +41,22 @@ export default {
   },
   computed: {
     graphicsCards() {
-      let gcs = this.recomendations.filter(recomendation => recomendation.type.toLowerCase() == "Graphics Card");
-      return gcs.sort((a, b) => a.votes > b.votes);
+      let gcs = this.recomendations.filter(recomendation => recomendation.type == "Graphics Card");
+      return gcs.sort((a, b) => a.votes < b.votes);
       
       // return this.$root.$data.recommendedSpecs[0].recommendations;
     },
     cpus() {
-      let cs = this.recomendations.filter(recomendation => recomendation.type.toLowerCase() == "CPU");
-      return cs.sort((a, b) => a.votes > b.votes);
+      let cs = this.recomendations.filter(recomendation => recomendation.type == "CPU");
+      return cs.sort((a, b) => a.votes < b.votes);
     },
     rams() {
-      let rs = this.recomendations.filter(recomendation => recomendation.type.toLowerCase() == "RAM");
-      return rs.sort((a, b) => a.votes > b.votes);
+      let rs = this.recomendations.filter(recomendation => recomendation.type == "RAM");
+      return rs.sort((a, b) => a.votes < b.votes);
     },
     storages() {
-      let ss = this.recomendations.filter(recomendation => recomendation.type.toLowerCase() == "Storage");
-      return ss.sort((a, b) => a.votes > b.votes);
+      let ss = this.recomendations.filter(recomendation => recomendation.type == "Storage");
+      return ss.sort((a, b) => a.votes < b.votes);
     },
   },
   methods: {
@@ -60,6 +64,7 @@ export default {
       console.log("getRecomendations");
       try {
         let response = await axios.get("/api/recommendations");
+        console.log(response.data)
         this.recomendations = response.data;
         return true;
       } catch (error) {
@@ -76,6 +81,7 @@ export default {
           dateCreated: rec.dateCreated,
           votes: rec.votes,
         });
+        this.getRecomendations();
       } catch (error) {
         console.log(error);
       }
